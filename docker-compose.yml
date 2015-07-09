@@ -1,10 +1,17 @@
 web:
-    image: php:apache
-    command: php -S 0.0.0.0:8000 -t /var/www/html
+    build: .
     ports:
-        - "8000:8000"
+        - "8000:80"
     volumes:
         - .:/var/www/html
     environment:
         - MODE=development
         - DEBUG=true
+    links:
+        - db
+db:
+    image: mysql
+    environment:
+        - MYSQL_ROOT_PASSWORD=root
+        - MYSQL_USER=my_user
+        - MYSQL_PASSWORD=my_pass

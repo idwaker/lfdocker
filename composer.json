@@ -1,5 +1,6 @@
 {
     "require": {
-        "slim/slim": "^3.0@beta"
+        "slim/slim": "^3.0@beta",
+        "slim/pdo": "~1.6"
     }
 }
