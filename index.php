@@ -40,17 +40,13 @@ $container['db'] = function ($c) {
  */
 $container['gclient'] = function ($c) {
     $client = new GearmanClient();
-    $client->addServer('gearman');
+    $client->addServer('gearman', 4730);
     return $client;
 };
 
 
-// settings
-
-
 // routes
 $app->get('/', function ($request, $response) {
-    var_dump($this->gclient);
 
     $html = "<html><head></head><body style='width: 640px;margin:0 auto;'>
     <div><h3>Subscribe Newsletter</h3>
@@ -101,6 +97,21 @@ $app->post('/save', function ($request, $response) {
 
     $response->write($html);
     return $response;
+});
+
+
+$app->get('/run', function ($request, $response) {
+    $query = $this->db->select()->from('subscriber')->limit(10);
+    $stmt = $query->execute();
+
+    foreach ($stmt->fetchAll() as $each) {
+        $data = json_encode([
+            'email' => $each['email'],
+            'fullname' => $each['fullname'],
+        ]);
+        $this->gclient->addTaskBackground('send_mails', $data);
+    }
+    $this->gclient->runTasks();
 });
 
 
