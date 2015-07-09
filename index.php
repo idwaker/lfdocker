@@ -35,12 +35,23 @@ $container['db'] = function ($c) {
     );
 };
 
+/**
+ * register gearman
+ */
+$container['gclient'] = function ($c) {
+    $client = new GearmanClient();
+    $client->addServer('gearman');
+    return $client;
+};
+
 
 // settings
 
 
 // routes
 $app->get('/', function ($request, $response) {
+    var_dump($this->gclient);
+
     $html = "<html><head></head><body style='width: 640px;margin:0 auto;'>
     <div><h3>Subscribe Newsletter</h3>
     <form name='newsletter' action='/save' method='post'>

@@ -1,0 +1,8 @@
+FROM ubuntu
+
+# install extensions
+RUN apt-get update && apt-get upgrade -y && apt-get install -y gearman-job-server
+
+EXPOSE 4730
+
+ENTRYPOINT [ "gearmand" ]

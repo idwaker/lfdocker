@@ -9,9 +9,13 @@ web:
         - DEBUG=true
     links:
         - db
+        - gearman
 db:
     image: mysql
     environment:
         - MYSQL_ROOT_PASSWORD=root
         - MYSQL_USER=my_user
         - MYSQL_PASSWORD=my_pass
+gearman:
+    build: .
+    dockerfile: Dockerfile-gearmand
