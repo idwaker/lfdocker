@@ -1,0 +1,10 @@
+web:
+    image: php:apache
+    command: php -S 0.0.0.0:8000 -t /var/www/html
+    ports:
+        - "8000:8000"
+    volumes:
+        - .:/var/www/html
+    environment:
+        - MODE=development
+        - DEBUG=true
