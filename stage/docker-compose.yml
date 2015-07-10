@@ -7,4 +7,5 @@ web:
     environment:
         - SOURCE=https://github.com/idwaker/lfdocker.git
 gearman:
-    image: lfdocker/gearman
+    build:  ../
+    dockerfile: Dockerfile-gearmand
