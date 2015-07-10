@@ -1,0 +1,10 @@
+web:
+    build: .
+    links:
+        - gearman
+    ports:
+        - "8000:80"
+    environment:
+        - SOURCE=https://github.com/idwaker/lfdocker.git
+gearman:
+    image: lfdocker/gearman
